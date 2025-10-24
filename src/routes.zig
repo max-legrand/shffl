@@ -57,6 +57,14 @@ pub fn callback_helper(app: *Server, req: *tanuki.Request, res: *tanuki.Response
         const state = req.query.get("state");
         if (state == null) return error.ParamsMissing;
         const state_value = utils.extractTokenFromCookie(&req.headers, "State");
+
+        try res.setCookie(.{
+            .name = "AccessToken",
+            .value = "",
+            .expires_at = "Thu, 01 Jan 1970 00:00:00 GMT",
+            .path = "/",
+        });
+
         if (state_value == null) return error.StateMissing;
         if (!std.mem.eql(u8, state.?, state_value.?)) return error.StateMismatch;
     }
@@ -381,6 +389,7 @@ const State = struct {
         var headers = [_]std.http.Header{
             .{ .name = "Authorization", .value = auth_header },
             .{ .name = "Content-Type", .value = "application/x-www-form-urlencoded" },
+            .{ .name = "Content-Length", .value = "0" },
         };
         var allowed_statuses = [_]u16{ 200, 204 };
 
@@ -422,6 +431,7 @@ const State = struct {
             const formatted_updated_msg = try std.fmt.allocPrint(state.allocator, "data: {s}\n\n", .{updated_msg});
             try writer.write(formatted_updated_msg);
         }
+        try writer.write("data: {\"complete\": true}\n\n");
     }
 };
 
@@ -486,6 +496,12 @@ fn logout_helper(res: *tanuki.Response) !void {
     });
     try res.setCookie(.{
         .name = "RefreshToken",
+        .value = "",
+        .expires_at = "Thu, 01 Jan 1970 00:00:00 GMT",
+        .path = "/",
+    });
+    try res.setCookie(.{
+        .name = "AccessToken",
         .value = "",
         .expires_at = "Thu, 01 Jan 1970 00:00:00 GMT",
         .path = "/",
