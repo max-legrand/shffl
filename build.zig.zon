@@ -1,0 +1,29 @@
+.{
+    .name = .shffl,
+    .version = "0.0.1",
+    .fingerprint = 0xbd3be42e1f53d9ec, // Changing this has security and trust implications.
+    .minimum_zig_version = "0.15.1",
+    .dependencies = .{
+        .tanuki = .{
+            .url = "git+https://github.com/max-legrand/tanuki?ref=main#aed8951e167e6571a76a36130e9baba9f68e5b65",
+            .hash = "tanuki-0.1.0-KEer8aRyAADw-G2RRXoYXOlfs-IPqaEiCwrc2jywkhqq",
+        },
+        .zlog = .{
+            .url = "git+https://github.com/max-legrand/zlog?ref=main#a5d0281bddc1711a43db182805a7dece786e0156",
+            .hash = "zlog-0.0.0-_MGzdV5LAAB9Ooirt6O04zBrLU0q9f3Ga-oyp_JJYbaf",
+        },
+        .multitool = .{
+            .url = "git+https://github.com/max-legrand/multitool?ref=main#180c5b7bf0d7821ce499ca6fd62b6ee9845e0928",
+            .hash = "multitool-0.0.1-Rfooy_ocAADSX4DgccQPwgNlbQ6lXKkeEixIFaYYRiIe",
+        },
+        .zul = .{
+            .url = "git+https://github.com/karlseguin/zul?ref=master#e770047f208cf4538fcd9fc64550c84fd5492fc4",
+            .hash = "zul-0.0.0-1oDot9yRBwDA_ovd6GC1M_ViW3LarywMaGrH6vcuEjqv",
+        },
+    },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+    },
+}

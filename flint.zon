@@ -1,0 +1,24 @@
+.{
+    .tasks = .{
+        .{
+            .name = "build-watch",
+            .cmd = "zig build",
+            .watcher = .{ "src/.*", "build.zig", "build.zig.zon" },
+        },
+        .{
+            .name = "server",
+            .cmd = "zig build run",
+            .watcher = .{ "src/.*\\.zig", "build.zig", "build.zig.zon" },
+            .keep_alive = true,
+        },
+        .{
+            .name = "web",
+            .cmd = "pnpm run build",
+            .cwd = "web",
+            .watcher = .{
+                "web/src/.*",
+                "web/html/.*",
+            },
+        },
+    },
+}
